@@ -2,7 +2,7 @@
 from urllib.request import urlopen
 from bs4 import BeautifulSoup
 from pprint import pprint
-import sqlite3
+import sqlite3, os
 
 connection = None
 cursor = None
@@ -137,7 +137,7 @@ def add_tag(comic_id, tag):
             print(inst.args)
             raise
 
-def main():
+def scrape_from_beginning():
     global connection, cursor
     
     # Implement method of grabing comic with next comic as null for start point
@@ -183,6 +183,48 @@ def main():
         connection.close()
     
     return
+
+def update_from_last():
+    pass
+
+def main():
+    
+    while True:
+        option = -1
+        confirmed = ""
+        
+        while option not in range(3):
+            print("Housepets Database Management")
+            print("(1) Create database from beginning")
+            print("(2) Update database from last comic")
+            print("(0) QUIT")
+            
+            option = input("Please select an option: ")
+            try:
+                option = int(option)
+            except ValueError:
+                pass
+    
+        if option == 0:
+            return
+        elif option == 1:
+            while confirmed not in ('Y','N'):
+                confirmed = input ("This will overwrite the current database. Are you sure? (Y/N) ").upper()
+            os.system('cls')
+            
+            if confirmed == 'Y':
+                #scrape_from_beginning()
+                #return
+                print("Yes")
+        elif option == 2:
+            while confirmed not in ('Y','N'):
+                confirmed = input ("Are you sure? (Y/N) ").upper()
+            os.system('cls')
+            
+            if confirmed == 'Y':
+                #update_from_last()
+                #return
+                print("Yes")            
 
 if __name__ == "__main__":
     main()
